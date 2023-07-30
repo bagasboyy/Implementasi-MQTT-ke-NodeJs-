@@ -4,15 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mqtt": "^5.0.0"
-  },
-  "scripts": {
-    "start": "node test.js"
+    "mqtt": "^5.0.0",
+    "mysql": "^2.18.1"
   }
 }
