@@ -1,6 +1,6 @@
 const db = require("./db_config");
 
-const sql = `CREATE TABLE hasil_suhu 
+const sql = `CREATE TABLE tbl_messages
     (
         id int NOT NULL AUTO_INCREMENT,
         suhu VARCHAR(255), 
