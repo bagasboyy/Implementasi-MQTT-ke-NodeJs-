@@ -9,6 +9,7 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 const mqtt = require('mqtt');
 const mysql = require('mysql');
+const bodyParser = require('body-parser')
 var Topic = '#';
 
 
@@ -21,6 +22,8 @@ const mqttPort = process.env.MQTT_PORT
 
 // Express Routes
 app.use(cors())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
   res.sendFile('./index.html', {root: __dirname});
@@ -28,9 +31,9 @@ app.get('/', (req, res) => {
 
 const server = http.createServer(app)
 
-server.listen(serverPort, () => {
-  console.log(`Example app listening on port ${serverPort}`)
-})
+// server.listen(serverPort, () => {
+//   console.log(`Example app listening on port ${serverPort}`)
+// })
 
 // Initialize MYSQL
 const mysqlHost = process.env.MYSQL_HOST
@@ -44,13 +47,31 @@ var con = mysql.createConnection({
 // Initialize Socket IO
 const io = new Server(server, {
   cors: {
-    origin: ['http://localhost', 'http://localhost:80', 'http://localhost:8000', 'http://127.0.0.1:8000'],
+    origin: ['http://localhost', 'http://localhost:80', 'http://localhost:8000', 'http://127.0.0.1:8000', 'http://localhost:8080'],
     methods: ['GET', 'POST'],
     credentials: false
   }
 })
-io.listen(ioPort)
-console.log(`Listening socket io server on port ${ioPort}`)
+// io.listen(ioPort)
+// console.log(`Listening socket io server on port ${ioPort}`)
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+  socket.on('my message', (msg) => {
+    console.log('message: ' + msg);
+  });
+  socket.on('my message', (msg) => {
+    io.emit('my broadcast', `server: ${msg}`);
+  });
+});
+
+
+server.listen(3000, () => {
+  console.log('listening on *:3000');
+});
+
 
 // Initialize MQTT
 const mqttHost = process.env.MQTT_HOST
@@ -90,27 +111,7 @@ function mqtt_messsageReceived(topic, message, packet) {
       console.log("1 data ditambahkan")
     })
   })
+  io.on("connection", (socket) => {
+    socket.emit(topic, message_str);
+  });
 };
-
-// Initialize MQTT
-// const mqttHost = process.env.MQTT_HOST
-// const client = mqtt.connect(`mqtt://${mqttHost}:${mqttPort}`, {
-//   clientId: 'Client_' + Math.floor(Math.random() * 999999),
-//   clean: true
-// })
- 
-// client.on('connect', () => {
-//   if (client.connected) {
-//     console.log(`Listening mqtt server on port ${mqttPort}`)
-//     client.subscribe('BLE_DASHBOARD_MONITORING')
-//   }
-// })
- 
-// client.on('message', async (topic, message) => {
-//   try {
-//     message = JSON.parse(message.toString())
-//     if (topic === 'BLE_DASHBOARD_MONITORING') {
-//       MQTTController.store(message, io)
-//     }
-//   } catch (err) {}
-// })

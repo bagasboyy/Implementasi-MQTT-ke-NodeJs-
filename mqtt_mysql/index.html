@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <title>Hello!</title>
-   </head>
-   <script src = "/socket.io/socket.io.js"></script>
-   <script>
-      const socket = io();
-   </script>
-   <body>Integrating Socket.io with Node.js and Express</body>
+  <head>
+    <title>Hello!</title>
+  </head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+      const { io } = require("socket.io-client");
+      const socket = io("https://localhost");
+  </script>
+  <body>
+    Integrating Socket.io with Node.js and Express
+    <div>
+      <script>
+        let count = 0;
+        setInterval(() => {
+          socket.volatile.emit("ping", ++count);
+        }, 1000);
+      </script>
+    </div>
+  </body>
 </html>
