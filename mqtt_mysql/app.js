@@ -52,8 +52,7 @@ const io = new Server(server, {
     credentials: false
   }
 })
-// io.listen(ioPort)
-// console.log(`Listening socket io server on port ${ioPort}`)
+
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('disconnect', () => {
@@ -68,7 +67,7 @@ io.on('connection', (socket) => {
 });
 
 
-server.listen(3000, () => {
+server.listen(serverPort, () => {
   console.log('listening on *:3000');
 });
 
@@ -109,9 +108,11 @@ function mqtt_messsageReceived(topic, message, packet) {
     con.query(sql, [record], function(err, result){
       if(err) throw err;
       console.log("1 data ditambahkan")
+      io.on("connection", (socket) => {
+        socket.on(topic, (message) => {
+          io.emit(topic, `server: ${message}`);
+        });
     })
+    });
   })
-  io.on("connection", (socket) => {
-    socket.emit(topic, message_str);
-  });
 };

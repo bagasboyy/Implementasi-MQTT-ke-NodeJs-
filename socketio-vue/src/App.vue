@@ -1,39 +1,76 @@
 <template>
-  <v-card class="mx-auto" max-width="344">
-    <v-img
-      src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-      height="200px"
-      cover
-    ></v-img>
+  <v-card class="mx-auto" max-width="448">
+    <v-layout>
+      <v-app-bar color="#f3f3f3" density="compact">
+        <!-- <template v-slot:prepend>
+          <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        </template> -->
 
-    <v-card-title> Top western road trips </v-card-title>
+        <v-app-bar-title class="d-flex justify-center align-center h-100"
+          >Monitoring Suhu dan Kelembaban</v-app-bar-title
+        >
 
-    <v-card-subtitle> 1,000 miles of wonder </v-card-subtitle>
+        <!-- <template v-slot:append>
+          <v-btn icon="mdi-dots-vertical"></v-btn>
+        </template> -->
+      </v-app-bar>
 
-    <v-card-actions>
-      <v-btn color="orange-lighten-2" variant="text"> Explore </v-btn>
+      <v-main>
+        <v-container align="center">
+          <v-row dense>
+            <v-card width="200" height="300">
+              <v-img
+                src="https://i.pinimg.com/564x/1b/92/93/1b92933ca1e59669c70336342dab2f0d.jpg"
+                height="200px"
+                cover
+              ></v-img>
 
-      <v-spacer></v-spacer>
+              <v-card-title> SUHU </v-card-title>
 
-      <v-btn
-        :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-        @click="show = !show"
-      ></v-btn>
-    </v-card-actions>
+              <v-card-text class="py-0">
+                <v-row align="center" no-gutters>
+                  <v-col class="text-h5"> 30&deg;C </v-col>                
+                </v-row>
+              </v-card-text>
 
-    <v-expand-transition>
-      <div v-show="show">
-        <v-divider></v-divider>
+              <v-expand-transition>
+                <div v-show="show">
+                  <v-divider></v-divider>
 
-        <v-card-text>
-          I'm a thing. But, like most politicians, he promised more than he
-          could deliver. You won't have time for sleeping, soldier, not with all
-          the bed making you'll be doing. Then we'll go with that data file!
-          Hey, you add a one and two zeros to that or we walk! You're going to
-          do his laundry? I've got to find a way to escape.
-        </v-card-text>
-      </div>
-    </v-expand-transition>
+                  <v-card-text> HASIL Suhu </v-card-text>
+                </div>
+              </v-expand-transition>
+            </v-card>
+
+            <v-spacer></v-spacer>
+
+            <v-card width="200" height="300">
+              <v-img
+                src="https://cdn.icon-icons.com/icons2/527/PNG/512/Humidity_icon-icons.com_52507.png"
+                height="200px"
+                cover
+              ></v-img>
+
+              <v-card-title> KELEMBABAN </v-card-title>
+
+              <v-card-text class="py-0">
+                <v-row align="center" no-gutters>
+                  <v-col class="text-h5"> 70% </v-col>                
+                </v-row>
+              </v-card-text>
+
+              <v-expand-transition>
+                <div v-show="show">
+                  <v-divider></v-divider>
+
+                  <v-card-text> HASIL Suhu </v-card-text>
+                </div>
+              </v-expand-transition>
+            </v-card>
+          </v-row>
+        </v-container>
+      </v-main>
+    </v-layout>
   </v-card>
 </template>
 
@@ -41,9 +78,6 @@
 import SocketioService from "./services/socketio.service.js";
 
 export default {
-  data: () => ({
-    show: false,
-  }),
   name: "App",
   components: {},
   created() {
@@ -55,13 +89,4 @@ export default {
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
