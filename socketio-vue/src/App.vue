@@ -29,17 +29,9 @@
 
               <v-card-text class="py-0">
                 <v-row align="center" no-gutters>
-                  <v-col class="text-h5"> 30&deg;C </v-col>                
+                  <v-col class="text-h5" data="io"> {{io}}&deg;C </v-col>
                 </v-row>
               </v-card-text>
-
-              <v-expand-transition>
-                <div v-show="show">
-                  <v-divider></v-divider>
-
-                  <v-card-text> HASIL Suhu </v-card-text>
-                </div>
-              </v-expand-transition>
             </v-card>
 
             <v-spacer></v-spacer>
@@ -55,17 +47,9 @@
 
               <v-card-text class="py-0">
                 <v-row align="center" no-gutters>
-                  <v-col class="text-h5"> 70% </v-col>                
+                  <v-col class="text-h5"> 70% </v-col>
                 </v-row>
               </v-card-text>
-
-              <v-expand-transition>
-                <div v-show="show">
-                  <v-divider></v-divider>
-
-                  <v-card-text> HASIL Suhu </v-card-text>
-                </div>
-              </v-expand-transition>
             </v-card>
           </v-row>
         </v-container>
@@ -76,12 +60,22 @@
 
 <script>
 import SocketioService from "./services/socketio.service.js";
+import { io } from 'socket.io-client';
 
 export default {
   name: "App",
   components: {},
-  created() {
-    SocketioService.setupSocketConnection();
+  data() {
+    return {
+      io:null,
+    };
+  },
+  mounted() {
+    this.socket = io(process.env.VUE_APP_SOCKET_ENDPOINT);
+    this.socket.on("test", (arg) => {
+      alert ("hello");
+      console.log(arg); // world
+    });
   },
   beforeUnmount() {
     SocketioService.disconnect();
