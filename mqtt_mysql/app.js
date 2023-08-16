@@ -95,7 +95,7 @@ function mqtt_messsageReceived(topic, message, packet) {
     con.query(sql, [record], function (err, result) {
       if (err) throw err;
       console.log("1 data ditambahkan");
-      io.emit("test", `server: ${record}`);
+      io.emit("test", `${record}`);
       // io.on("connection", (socket) => {
         
       //   console.log("a user connected");
