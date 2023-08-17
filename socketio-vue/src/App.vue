@@ -1,35 +1,20 @@
 <template>
-  <v-card>
-    <v-layout>
-      <v-theme-provider theme="dark">
-        <!-- uses the high-contrast theme -->
-        <v-app-bar density="compact">
-          <!-- <template v-slot:prepend>
-          <v-app-bar-nav-icon></v-app-bar-nav-ico
-        </template> -->
-
+  <v-container>
+    <v-layout  class="rounded rounded-md">
+      <v-app-bar density="compact">
           <v-app-bar-title class="d-flex justify-center align-center h-100"
             >Monitoring Suhu dan Kelembaban</v-app-bar-title
           >
-
-          <!-- <template v-slot:append>
-          <v-btn icon="mdi-dots-vertical"></v-btn>
-        </template> -->
         </v-app-bar>
-      </v-theme-provider>
 
-      <v-main>
-        <v-card-item
-          class="d-flex justify-center mb-6 bg-surface-variant"
-          align="center"
-        >
+      <v-main class="d-flex align-center justify-center" style="min-height: 800px;">
+        <v-card-item class="d-flex justify-center" align="center">
           <v-row dense justify="center">
             <v-col sm="5" md="6">
-              <v-card width="200" height="300">
+              <v-card width="300" height="400">
                 <v-img
                   src="https://i.pinimg.com/564x/1b/92/93/1b92933ca1e59669c70336342dab2f0d.jpg"
-                  height="200px"
-                  cover
+                  height="300px"
                 ></v-img>
 
                 <v-card-title> SUHU </v-card-title>
@@ -41,14 +26,12 @@
                 </v-card-text>
               </v-card>
             </v-col>
-            <!-- <v-spacer></v-spacer> -->
 
             <v-col sm="5" md="6">
-              <v-card width="200" height="300">
+              <v-card width="300" height="400">
                 <v-img
                   src="https://cdn.icon-icons.com/icons2/527/PNG/512/Humidity_icon-icons.com_52507.png"
-                  height="200px"
-                  cover
+                  height="300px"
                 ></v-img>
 
                 <v-card-title> KELEMBABAN </v-card-title>
@@ -62,36 +45,13 @@
             </v-col>
           </v-row>
         </v-card-item>
-        <v-table density="compact">
-          <thead>
-            <tr>
-              <th class="text-left">Kota</th>
-              <th class="text-left">Suhu</th>
-              <th class="text-left">Kelembaban</th>
-              <th class="text-left">Tanggal</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{ name }}</td>
-              <td>{{ suhu }}&deg;C</td>
-              <td>{{ kelembaban }}%</td>
-              <td>{{ date }}</td>
-            </tr>
-          </tbody>
-        </v-table>
       </v-main>
 
-      <v-theme-provider theme="dark">
-        <!-- uses the high-contrast theme -->
-        <v-footer app name="footer">
-          <v-btn class="mx-auto" variant="text" @click="print('footer')">
-            CopyRight@2023
-          </v-btn>
+      <v-footer app name="footer">
+          <v-col class="d-flex justify-center"> CopyRight@2023 </v-col>
         </v-footer>
-      </v-theme-provider>
     </v-layout>
-  </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -106,8 +66,6 @@ export default {
       io: null,
       suhu: "",
       kelembaban: "",
-      date: "",
-      name: "",
     };
   },
   mounted() {
@@ -117,16 +75,19 @@ export default {
       this.suhu = msg.split(" ")[0];
       this.kelembaban = msg.split(" ")[2];
     });
-    // this.suhu=this.io.split("")
+
     // setInterval(() => {
     //   this.suhu=Math.floor((Math.random() * 50) + 1);
     //   this.kelembaban=Math.floor((Math.random() * 100) + 1);
     // }, 3000);
   },
-  // beforeUnmount() {
-  //   SocketioService.disconnect();
-  // },
 };
 </script>
 
-<style></style>
+<style>
+#app {
+  background: url('https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4wtd8?ver=2d1f')
+    no-repeat center center fixed !important;
+  background-size: cover;
+}
+</style>
